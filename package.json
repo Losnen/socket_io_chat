@@ -1,0 +1,26 @@
+{
+  "name": "chat-socket.io",
+  "version": "0.0.1",
+  "description": "A chat with socket.io",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Losnen/socket_io_chat.git"
+  },
+  "keywords": [
+    "chat",
+    "socket.io"
+  ],
+  "author": "Samuel Ramos Barroso (alu0100815146@ull.edu.es)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Losnen/socket_io_chat/issues"
+  },
+  "homepage": "https://github.com/Losnen/socket_io_chat#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
