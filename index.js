@@ -21,29 +21,24 @@ app.set('view engine', 'ejs');
 
 app.use(expressLayouts);
 app.use(express.static(__dirname + '/public'));
-app.use(morgan('dev')); // log every request to the console
-app.use(cookieParser()); // read cookies (needed for auth)
-app.use(bodyParser()); // get information from html forms
-app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+app.use(morgan('dev'));
+app.use(cookieParser());
+app.use(bodyParser());
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch' }));
 app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-app.use(flash()); // use connect-flash for flash messages stored in session
+app.use(passport.session());
+app.use(flash());
 
 app.get('/', function(req, res) {
-  res.render('index.ejs'); // load the index.ejs file
+  res.render('index');
 });
-
-app.get('/chat', function(req, res){
-  res.render('chat');
-});
-
 
 app.get('/login', function(req, res) {
 	res.render('login', { message: req.flash('loginMessage') });
 });
 
 app.post('/login', passport.authenticate('local-login', {
-	successRedirect : '/profile', // redirect to the secure profile section
+	successRedirect : '/chat', // redirect to the secure profile section
 	failureRedirect : '/login', // redirect back to the signup page if there is an error
 	failureFlash : true // allow flash messages
 }));
@@ -53,15 +48,13 @@ app.get('/signup', function(req, res) {
 });
 
 app.post('/signup', passport.authenticate('local-signup', {
-	successRedirect : '/profile', // redirect to the secure profile section
+	successRedirect : '/chat', // redirect to the secure profile section
 	failureRedirect : '/signup', // redirect back to the signup page if there is an error
 	failureFlash : true // allow flash messages
 }));
 
-app.get('/profile', isLoggedIn, function(req, res) {
-	res.render('profile.ejs', {
-		user : req.user
-    });
+app.get('/chat', isLoggedIn, function(req, res) {
+	res.render('chat')
 });
 
 app.get('/logout', function(req, res) {
