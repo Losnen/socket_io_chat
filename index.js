@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 const path = require('path');
-var expressLayouts = require('express-ejs-layouts');
+//var expressLayouts = require('express-ejs-layouts');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
@@ -19,7 +19,6 @@ mongoose.connect('mongodb://localhost/data'); // connect to our database
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(expressLayouts);
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
 app.use(cookieParser());
@@ -30,11 +29,11 @@ app.use(passport.session());
 app.use(flash());
 
 app.get('/', function(req, res) {
-  res.render('index');
+  res.render('index.ejs');
 });
 
 app.get('/login', function(req, res) {
-	res.render('login', { message: req.flash('loginMessage') });
+	res.render('login.ejs', { message: req.flash('loginMessage') });
 });
 
 app.post('/login', passport.authenticate('local-login', {
@@ -44,17 +43,19 @@ app.post('/login', passport.authenticate('local-login', {
 }));
 
 app.get('/signup', function(req, res) {
-	res.render('signup', { message: req.flash('signupMessage') });
+	res.render('signup.ejs', { message: req.flash('signupMessage') });
 });
 
 app.post('/signup', passport.authenticate('local-signup', {
 	successRedirect : '/chat', // redirect to the secure profile section
 	failureRedirect : '/signup', // redirect back to the signup page if there is an error
 	failureFlash : true // allow flash messages
-}));
+}), function(){
+  console.log(hola);
+});
 
 app.get('/chat', isLoggedIn, function(req, res) {
-	res.render('chat')
+	res.render('chat.ejs')
 });
 
 app.get('/logout', function(req, res) {
