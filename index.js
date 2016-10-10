@@ -55,7 +55,9 @@ app.post('/signup', passport.authenticate('local-signup', {
 });
 
 app.get('/chat', isLoggedIn, function(req, res) {
-	res.render('chat.ejs')
+	res.render('chat.ejs', {
+    user: req.user
+  });
 });
 
 app.get('/logout', function(req, res) {
